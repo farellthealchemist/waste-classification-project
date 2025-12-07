@@ -65,8 +65,17 @@ This project was completed in **3 phases**:
 
 ## 📸 Screenshots
 
+### Web Interface
 ![App Screenshot](screenshot.png)
 
+*Web application showing real-time waste classification with high confidence predictions*
+
+### Features Shown:
+- ✅ User-friendly upload interface
+- ✅ Real-time AI prediction
+- ✅ Confidence score display (99%+ accuracy)
+- ✅ Educational information about waste disposal
+- ✅ Clean and modern UI
 ## 👨‍💻 Author
 
 **Farel** - Computer Vision Beginner Project
