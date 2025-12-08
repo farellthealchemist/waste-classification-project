@@ -13,6 +13,17 @@ st.set_page_config(
     layout="centered"
 )
 
+# Hide Streamlit default elements
+hide_streamlit_style = """
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    .stDeployButton {display:none;}
+    </style>
+"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
 # ============================================
 # LOAD MODEL
 # ============================================
@@ -119,7 +130,7 @@ with st.sidebar:
     st.markdown("- F1-Score: 90%")
     
     st.markdown("---")
-    st.caption("Dibuat oleh: Farel")
+    st.caption("Dibuat oleh: Farell")
     st.caption("Project: Computer Vision untuk Pemula")
 
 # ============================================
@@ -140,7 +151,7 @@ if uploaded_file is not None:
     with col1:
         st.subheader("📷 Foto yang Diupload")
         image = Image.open(uploaded_file)
-        st.image(image, use_column_width=True)
+        st.image(image, use_container_width=True)
     
     with col2:
         st.subheader("🔍 Hasil Prediksi")
@@ -169,12 +180,9 @@ if uploaded_file is not None:
     st.markdown("---")
     st.markdown(info)
     
-    # Download result button
+    # Helpful message
     st.markdown("---")
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        if st.button("🔄 Upload Gambar Lain", use_container_width=True):
-            st.rerun()
+    st.info("💡 **Tip:** Upload gambar lain dengan klik 'Browse files' atau drag & drop untuk klasifikasi baru")
 
 else:
     # Instructions
