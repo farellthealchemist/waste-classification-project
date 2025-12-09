@@ -3,6 +3,7 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 import cv2
+from datetime import datetime
 
 # ============================================
 # PAGE CONFIG
@@ -14,13 +15,21 @@ st.set_page_config(
 )
 
 # ============================================
-# LOAD MODEL
+# LOAD MODEL - WITH ERROR HANDLING
 # ============================================
 @st.cache_resource
 def load_model():
-    model_path = 'models/best_model.keras'
-    model = tf.keras.models.load_model(model_path)
-    return model
+    try:
+        model_path = 'models/best_model.keras'
+        model = tf.keras.models.load_model(model_path)
+        return model
+    except FileNotFoundError:
+        st.error("❌ Error: Model file tidak ditemukan!")
+        st.info("💡 Pastikan file 'best_model.keras' ada di folder 'models/'")
+        st.stop()
+    except Exception as e:
+        st.error(f"❌ Error loading model: {e}")
+        st.stop()
 
 model = load_model()
 
@@ -169,6 +178,36 @@ if uploaded_file is not None:
     st.markdown("---")
     st.markdown(info)
     
+    # Download Button untuk Save Result
+    st.markdown("---")
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        # Prepare result text
+        result_text = f"""
+HASIL KLASIFIKASI SAMPAH
+========================
+
+Kategori      : {label}
+Confidence    : {conf_display:.2f}%
+Tanggal       : {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+Nama File     : {uploaded_file.name}
+
+Informasi:
+{info.strip()}
+
+---
+Waste Classification System
+Powered by TensorFlow & Streamlit
+        """
+        
+        st.download_button(
+            label="📥 Download Hasil Klasifikasi",
+            data=result_text,
+            file_name=f"hasil_klasifikasi_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt",
+            mime="text/plain",
+            use_container_width=True
+        )
+    
     # Helpful message
     st.markdown("---")
     st.info("💡 **Tip:** Upload gambar lain dengan klik 'Browse files' atau drag & drop untuk klasifikasi baru")
@@ -200,6 +239,25 @@ else:
         - Kaleng minuman
         - Kemasan makanan
         """)
+    
+    # Contoh Hasil Klasifikasi (FEATURE #2)
+    st.markdown("---")
+    st.subheader("📸 Contoh Hasil Klasifikasi")
+    st.markdown("Berikut adalah contoh hasil prediksi model:")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.success("**🌿 Organic**")
+        st.markdown("**Confidence:** 99.77%")
+        st.caption("✅ Sayuran, buah-buahan, sisa makanan")
+        st.caption("Model dapat mengidentifikasi sampah organik dengan tingkat akurasi sangat tinggi")
+    
+    with col2:
+        st.info("**♻️ Recyclable**")
+        st.markdown("**Confidence:** 99.33%")
+        st.caption("✅ Plastik, kertas, kaleng, botol")
+        st.caption("Model dapat membedakan material yang dapat didaur ulang")
 
 # ============================================
 # FOOTER
