@@ -13,17 +13,6 @@ st.set_page_config(
     layout="centered"
 )
 
-# Hide Streamlit default elements
-hide_streamlit_style = """
-    <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    .stDeployButton {display:none;}
-    </style>
-"""
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
-
 # ============================================
 # LOAD MODEL
 # ============================================
@@ -130,7 +119,7 @@ with st.sidebar:
     st.markdown("- F1-Score: 90%")
     
     st.markdown("---")
-    st.caption("Dibuat oleh: Farell")
+    st.caption("Dibuat oleh: Farell Adrian")
     st.caption("Project: Computer Vision untuk Pemula")
 
 # ============================================
