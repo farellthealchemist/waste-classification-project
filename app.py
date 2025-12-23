@@ -17,18 +17,34 @@ st.set_page_config(
 # ============================================
 # LOAD MODEL - WITH ERROR HANDLING
 # ============================================
+import os
+import gdown
+
 @st.cache_resource
 def load_model():
     try:
         model_path = 'models/best_model.keras'
+        
+        # Check if model exists locally
+        if not os.path.exists(model_path):
+            st.info("📥 Downloading model from Google Drive...")
+            os.makedirs('models', exist_ok=True)
+            
+            # Google Drive file ID
+            file_id = "1vI88ct35fkZcE86UCWVIpSxEkpAvozjS"
+            url = f"https://drive.google.com/uc?id={file_id}"
+            
+            # Download model
+            gdown.download(url, model_path, quiet=False)
+            st.success("✅ Model downloaded successfully!")
+        
+        # Load model
         model = tf.keras.models.load_model(model_path)
         return model
-    except FileNotFoundError:
-        st.error("❌ Error: Model file tidak ditemukan!")
-        st.info("💡 Pastikan file 'best_model.keras' ada di folder 'models/'")
-        st.stop()
+        
     except Exception as e:
         st.error(f"❌ Error loading model: {e}")
+        st.info("💡 Pastikan model sudah diupload ke Google Drive dan link-nya public")
         st.stop()
 
 model = load_model()

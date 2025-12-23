@@ -1,0 +1,25 @@
+streamlit==1.39.0
+tensorflow==2.19.0
+numpy==1.26.4
+pillow==10.4.0
+opencv-python-headless==4.10.0.84
+gdown==5.1.0
+import os
+import gdown
+```
+
+**⚠️ PENTING:** Pakai `opencv-python-headless` bukan `opencv-python` untuk cloud deployment!
+
+---
+
+### **Step 2: Update .gitignore**
+
+Pastikan `.gitignore` sudah include ini:
+```
+dataset/
+*.h5
+*.keras
+__pycache__/
+*.pyc
+.vscode/
+.streamlit/secrets.toml
