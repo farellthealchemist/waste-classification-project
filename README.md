@@ -1,85 +1,232 @@
-# 🗑️ Waste Classification System
+# 🗑️ Sistem Klasifikasi Sampah Pintar
 
-AI-powered waste classification using Deep Learning (CNN) to classify waste into **Organic** and **Recyclable** categories.
+Aplikasi pintar yang bisa **mengenali jenis sampah** hanya dengan foto! Menggunakan teknologi **Kecerdasan Buatan (AI)** untuk membantu memilah sampah dengan benar.
 
-## 🎯 Project Overview
+---
 
-- **Model Accuracy**: 89.91%
-- **Training Data**: 22,564 images
-- **Testing Data**: 2,527 images
-- **Categories**: 2 (Organic & Recyclable)
+## 🌟 Apa itu Aplikasi Ini?
 
-## 🏗️ Tech Stack
+Aplikasi ini adalah **"otak digital"** yang sudah dilatih untuk membedakan 2 jenis sampah:
+- 🌿 **Sampah Organik** - Sisa makanan, kulit buah, daun
+- ♻️ **Sampah Daur Ulang** - Plastik, kertas, kaleng, botol
 
-- **Deep Learning**: TensorFlow/Keras
-- **Model**: Custom CNN (9.8M parameters)
-- **Frontend**: Streamlit
-- **Training**: Google Colab (GPU)
-- **Languages**: Python
+**Cara kerjanya sederhana:**
+1. Upload foto sampah
+2. AI akan menganalisis dalam hitungan detik
+3. Dapat hasil: jenis sampah + tingkat keyakinan AI
 
-## 📊 Model Performance
+---
 
-| Metric | Value |
-|--------|-------|
-| Accuracy | 89.91% |
-| Precision | 90% |
-| Recall | 90% |
-| F1-Score | 90% |
+## 🎯 Seberapa Akurat?
 
-## 🚀 How to Run
+✅ **Tingkat Akurasi: 89.91%** (hampir 90 dari 100 prediksi benar!)
 
-### Prerequisites
+Artinya: Dari 100 foto sampah, aplikasi ini bisa menebak dengan benar sekitar 90 kali. Itu angka yang sangat bagus untuk AI!
+
+---
+
+## 🌐 Coba Langsung!
+
+**Aplikasi sudah online dan bisa dipakai gratis:**
+👉 [Buka Aplikasi](https://waste-classification-project-pwaiwcwtb5ubhw3smvpsh6.streamlit.app)
+
+Tidak perlu install apa-apa, langsung buka di browser!
+
+---
+
+## 📊 Data & Pelatihan
+
+**Berapa banyak "latihan" yang dilakukan AI?**
+- 📚 Dilatih dengan **22,564 foto sampah** (seperti siswa belajar dari 22 ribu contoh soal!)
+- ✅ Diuji dengan **2,527 foto** untuk mengecek kepintarannya
+- ⏱️ Waktu pelatihan: ~1 jam (menggunakan komputer super kencang di cloud)
+
+**Hasilnya?**
+- Akurasi: 89.91% ✅
+- Presisi: 90% (jarang salah tebak)
+- Recall: 90% (jarang kelewatan)
+
+---
+
+## 🛠️ Teknologi yang Dipakai
+
+Untuk yang penasaran teknisnya:
+
+| Komponen | Teknologi |
+|----------|-----------|
+| Otak AI | CNN (Convolutional Neural Network) |
+| Framework | TensorFlow |
+| Jumlah Parameter | 9.8 juta (seberapa "pintar" AI-nya) |
+| Antarmuka Web | Streamlit |
+| Bahasa Pemrograman | Python |
+| Pelatihan | Google Colab (GPU gratis) |
+
+---
+
+## 💻 Cara Pakai (Online)
+
+**Paling Mudah:** Langsung buka link di atas!
+
+Atau kalau mau jalankan di komputer sendiri:
+
+### 1. Install Python & Library
 ```bash
-pip install tensorflow streamlit pillow opencv-python
+pip install tensorflow streamlit pillow opencv-python gdown
 ```
 
-### Run Application
+### 2. Download Code
+```bash
+git clone https://github.com/farellthealchemist/waste-classification-project.git
+cd waste-classification-project
+```
+
+### 3. Jalankan Aplikasi
 ```bash
 streamlit run app.py
 ```
 
-Open browser at `http://localhost:8501`
+Buka browser di `http://localhost:8501`
 
-## 📁 Project Structure
+---
+
+## 📁 Isi Project
 ```
-project_sampah/
-├── app.py                    # Streamlit web app
-├── models/
-│   └── best_model.keras      # Trained model
-├── notebooks/
+📦 waste-classification-project/
+├── 📄 app.py                    # Kode aplikasi web
+├── 📄 README.md                 # File yang sedang kamu baca ini
+├── 📄 requirements.txt          # Daftar library yang dibutuhkan
+├── 📄 screenshot.png            # Screenshot aplikasi
+├── 📂 models/                   # Folder untuk "otak" AI
+│   └── best_model.keras         # File AI yang sudah dilatih (37 MB)
+├── 📂 notebooks/                # Script untuk persiapan data
 │   ├── explore_data.py
 │   ├── data_generator.py
-│   └── ... (preprocessing scripts)
-└── dataset/
-    ├── TRAIN/
-    └── TEST/
+│   ├── visualize_data.py
+│   └── ... (file lainnya)
+└── 📂 dataset/                  # Foto-foto untuk latihan (tidak di-upload)
+    ├── TRAIN/                   # 22,564 foto untuk latihan
+    └── TEST/                    # 2,527 foto untuk ujian
 ```
 
-## 🎓 Learning Journey
+---
 
-This project was completed in **3 phases**:
+## 🎓 Proses Pembuatan
 
-1. **Week 1-2**: Data preparation & preprocessing
-2. **Week 3**: Model training (Google Colab GPU)
-3. **Week 4**: Web deployment (Streamlit)
+Project ini dikerjakan dalam **3 tahap besar:**
 
-## 📸 Screenshots
+### **Tahap 1: Persiapan (2 minggu)**
+- Download 25,000+ foto sampah
+- Pisahkan jadi data latihan & ujian
+- Ubah ukuran foto jadi seragam (224x224 pixel)
+- Tambah variasi foto (putar, zoom, flip)
 
-### Web Interface
-![App Screenshot](screenshot.png)
+### **Tahap 2: Melatih AI (1 minggu)**
+- Ajarin AI mengenali sampah (pakai Google Colab)
+- AI "belajar" dari 22,564 foto
+- Tes AI dengan 2,527 foto
+- Dapat akurasi 89.91%! 🎉
 
-*Web application showing real-time waste classification with high confidence predictions*
+### **Tahap 3: Bikin Website (1 minggu)**
+- Buat tampilan web yang gampang dipakai
+- Upload foto → AI prediksi → tampil hasil
+- Deploy ke internet (gratis di Streamlit Cloud)
 
-### Features Shown:
-- ✅ User-friendly upload interface
-- ✅ Real-time AI prediction
-- ✅ Confidence score display (99%+ accuracy)
-- ✅ Educational information about waste disposal
-- ✅ Clean and modern UI
-## 👨‍💻 Author
+**Total waktu:** ~1 bulan
 
-**Farel** - Computer Vision Beginner Project
+---
 
-## 📄 License
+## 📸 Tampilan Aplikasi
 
-This project is for educational purposes.
+### Homepage
+![Screenshot Aplikasi](screenshot.png)
+
+**Fitur-fitur:**
+- ✅ Upload foto dengan drag & drop
+- ✅ Hasil prediksi real-time (cepat!)
+- ✅ Progress bar keyakinan AI (99%+)
+- ✅ Info cara buang sampah yang benar
+- ✅ Download hasil klasifikasi
+- ✅ Tampilan modern & user-friendly
+
+---
+
+## 🎯 Manfaat Aplikasi
+
+**Untuk Masyarakat:**
+- Bantu pilah sampah dengan benar
+- Edukasi cara buang sampah yang tepat
+- Gratis & mudah diakses
+
+**Untuk Lingkungan:**
+- Kurangi sampah yang salah tempat
+- Tingkatkan daur ulang
+- Bantu jaga bumi kita 🌍
+
+**Untuk Pelajar/Mahasiswa:**
+- Contoh project AI yang aplikatif
+- Belajar Computer Vision dengan mudah
+- Portfolio untuk CV/interview
+
+---
+
+## ❓ FAQ (Pertanyaan yang Sering Ditanya)
+
+**Q: Apakah gratis?**
+A: Ya! 100% gratis untuk dipakai.
+
+**Q: Apakah data foto saya disimpan?**
+A: Tidak. Foto hanya diproses sementara dan langsung dihapus.
+
+**Q: Bisa offline?**
+A: Bisa! Download code-nya dan jalankan di laptop sendiri.
+
+**Q: Akurat untuk semua jenis sampah?**
+A: Aplikasi ini dilatih khusus untuk 2 kategori (Organic & Recyclable). Akurasi 89.91% untuk kategori ini.
+
+**Q: Bisa tambah kategori lain?**
+A: Bisa! Tapi perlu latih ulang AI dengan dataset baru.
+
+---
+
+## 🚀 Pengembangan Selanjutnya
+
+**Rencana update di masa depan:**
+- [ ] Tambah kategori: Elektronik, B3, dll
+- [ ] Prediksi multiple foto sekaligus
+- [ ] Aplikasi mobile (Android/iOS)
+- [ ] Integrasi dengan tempat sampah pintar
+- [ ] Multi-bahasa (English, Indonesia, dll)
+
+---
+
+## 👨‍💻 Pembuat
+
+**Farell Adrian**
+- Project: Computer Vision untuk Pemula
+- Kontak: [GitHub](https://github.com/farellthealchemist)
+
+---
+
+## 📄 Lisensi
+
+Project ini dibuat untuk **tujuan edukasi**.
+Bebas dipakai dan dikembangkan untuk belajar! 📚
+
+---
+
+## 🙏 Terima Kasih
+
+Terima kasih sudah melihat project ini!
+
+Kalau ada pertanyaan atau saran, jangan ragu untuk:
+- Buka issue di GitHub
+- Atau kontak langsung
+
+**Mari sama-sama jaga lingkungan! 🌱**
+
+---
+
+<div align="center">
+  <p>Made with ❤️ and ☕ by Farell</p>
+  <p>Powered by TensorFlow & Streamlit</p>
+</div>
