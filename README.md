@@ -114,24 +114,22 @@ Buka browser di `http://localhost:8501`
 
 Project ini dikerjakan dalam **3 tahap besar:**
 
-### **Tahap 1: Persiapan (2 minggu)**
+### **Tahap 1: Persiapan**
 - Download 25,000+ foto sampah
 - Pisahkan jadi data latihan & ujian
 - Ubah ukuran foto jadi seragam (224x224 pixel)
 - Tambah variasi foto (putar, zoom, flip)
 
-### **Tahap 2: Melatih AI (1 minggu)**
+### **Tahap 2: Melatih AI**
 - Ajarin AI mengenali sampah (pakai Google Colab)
 - AI "belajar" dari 22,564 foto
 - Tes AI dengan 2,527 foto
 - Dapat akurasi 89.91%! 🎉
 
-### **Tahap 3: Bikin Website (1 minggu)**
+### **Tahap 3: Bikin Website**
 - Buat tampilan web yang gampang dipakai
 - Upload foto → AI prediksi → tampil hasil
 - Deploy ke internet (gratis di Streamlit Cloud)
-
-**Total waktu:** ~1 bulan
 
 ---
 
@@ -162,35 +160,11 @@ Project ini dikerjakan dalam **3 tahap besar:**
 - Tingkatkan daur ulang
 - Bantu jaga bumi kita 🌍
 
-**Untuk Pelajar/Mahasiswa:**
-- Contoh project AI yang aplikatif
-- Belajar Computer Vision dengan mudah
-- Portfolio untuk CV/interview
-
----
-
-## ❓ FAQ (Pertanyaan yang Sering Ditanya)
-
-**Q: Apakah gratis?**
-A: Ya! 100% gratis untuk dipakai.
-
-**Q: Apakah data foto saya disimpan?**
-A: Tidak. Foto hanya diproses sementara dan langsung dihapus.
-
-**Q: Bisa offline?**
-A: Bisa! Download code-nya dan jalankan di laptop sendiri.
-
-**Q: Akurat untuk semua jenis sampah?**
-A: Aplikasi ini dilatih khusus untuk 2 kategori (Organic & Recyclable). Akurasi 89.91% untuk kategori ini.
-
-**Q: Bisa tambah kategori lain?**
-A: Bisa! Tapi perlu latih ulang AI dengan dataset baru.
-
 ---
 
 ## 🚀 Pengembangan Selanjutnya
 
-**Rencana update di masa depan:**
+**Rencana update:**
 - [ ] Tambah kategori: Elektronik, B3, dll
 - [ ] Prediksi multiple foto sekaligus
 - [ ] Aplikasi mobile (Android/iOS)
