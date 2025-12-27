@@ -4,7 +4,7 @@ Aplikasi pintar yang bisa **mengenali jenis sampah** hanya dengan foto! Mengguna
 
 ---
 
-## 🌟 Apa itu Aplikasi Ini?
+## 🌟 Ini Aplikasi apa?
 
 Aplikasi ini adalah **"otak digital"** yang sudah dilatih untuk membedakan 2 jenis sampah:
 - 🌿 **Sampah Organik** - Sisa makanan, kulit buah, daun
