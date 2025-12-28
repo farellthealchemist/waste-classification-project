@@ -151,55 +151,62 @@ with st.sidebar:
 # MAIN CONTENT
 # ============================================
 
-# Upload Image
-uploaded_file = st.file_uploader(
-    "📤 Upload Foto Sampah",
-    type=['jpg', 'jpeg', 'png'],
-    help="Upload foto sampah yang ingin diklasifikasikan"
-)
+# Tab selection
+tab1, tab2 = st.tabs(["📷 Single Image", "📁 Batch Prediction"])
 
-if uploaded_file is not None:
-    # Display uploaded image
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.subheader("📷 Foto yang Diupload")
-        image = Image.open(uploaded_file)
-        st.image(image, use_container_width=True)
-    
-    with col2:
-        st.subheader("🔍 Hasil Prediksi")
+# ============================================
+# TAB 1: SINGLE IMAGE UPLOAD (existing code)
+# ============================================
+with tab1:
+    # Upload Image
+    uploaded_file = st.file_uploader(
+        "📤 Upload Foto Sampah",
+        type=['jpg', 'jpeg', 'png'],
+        help="Upload foto sampah yang ingin diklasifikasikan",
+        key="single_upload"
+    )
+
+    if uploaded_file is not None:
+        # Display uploaded image
+        col1, col2 = st.columns(2)
         
-        # Convert PIL to OpenCV
-        img_array = np.array(image)
-        img_bgr = cv2.cvtColor(img_array, cv2.COLOR_RGB2BGR)
+        with col1:
+            st.subheader("📷 Foto yang Diupload")
+            image = Image.open(uploaded_file)
+            st.image(image, use_container_width=True)
         
-        # Predict
-        with st.spinner('🤔 Menganalisis gambar...'):
-            label, confidence, emoji, color, info = predict(img_bgr)
-        
-        # Display result
-        st.markdown(f"## {emoji} **{label}**")
-        
-        # Confidence bar
-        if label.startswith("Recyclable"):
-            conf_display = confidence * 100
-        else:
-            conf_display = (1 - confidence) * 100
+        with col2:
+            st.subheader("🔍 Hasil Prediksi")
             
-        st.progress(conf_display / 100)
-        st.markdown(f"**Tingkat Keyakinan:** {conf_display:.2f}%")
-    
-    # Info section
-    st.markdown("---")
-    st.markdown(info)
-    
-    # Download Button untuk Save Result
-    st.markdown("---")
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        # Prepare result text
-        result_text = f"""
+            # Convert PIL to OpenCV
+            img_array = np.array(image)
+            img_bgr = cv2.cvtColor(img_array, cv2.COLOR_RGB2BGR)
+            
+            # Predict
+            with st.spinner('🤔 Menganalisis gambar...'):
+                label, confidence, emoji, color, info = predict(img_bgr)
+            
+            # Display result
+            st.markdown(f"## {emoji} **{label}**")
+            
+            # Confidence bar
+            if label.startswith("Recyclable"):
+                conf_display = confidence * 100
+            else:
+                conf_display = (1 - confidence) * 100
+                
+            st.progress(conf_display / 100)
+            st.markdown(f"**Tingkat Keyakinan:** {conf_display:.2f}%")
+        
+        # Info section
+        st.markdown("---")
+        st.markdown(info)
+        
+        # Download Button
+        st.markdown("---")
+        col1, col2, col3 = st.columns([1, 2, 1])
+        with col2:
+            result_text = f"""
 HASIL KLASIFIKASI SAMPAH
 ========================
 
@@ -214,74 +221,211 @@ Informasi:
 ---
 Waste Classification System
 Powered by TensorFlow & Streamlit
-        """
+            """
+            
+            st.download_button(
+                label="📥 Download Hasil Klasifikasi",
+                data=result_text,
+                file_name=f"hasil_klasifikasi_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt",
+                mime="text/plain",
+                use_container_width=True
+            )
         
-        st.download_button(
-            label="📥 Download Hasil Klasifikasi",
-            data=result_text,
-            file_name=f"hasil_klasifikasi_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt",
-            mime="text/plain",
-            use_container_width=True
-        )
-    
-    # Helpful message
-    st.markdown("---")
-    st.info("💡 **Tip:** Upload gambar lain dengan klik 'Browse files' atau drag & drop untuk klasifikasi baru")
+        # Helpful message
+        st.markdown("---")
+        st.info("💡 **Tip:** Upload gambar lain dengan klik 'Browse files' atau drag & drop untuk klasifikasi baru")
 
-else:
-    # Instructions
-    st.info("👆 Upload foto sampah untuk memulai klasifikasi")
-    
-    # Example images section
-    st.markdown("---")
-    st.subheader("💡 Contoh Gambar")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("### 🌿 Organic")
-        st.markdown("""
-        - Sisa makanan
-        - Kulit buah
-        - Daun & ranting
-        - Sayuran busuk
-        """)
-    
-    with col2:
-        st.markdown("### ♻️ Recyclable")
-        st.markdown("""
-        - Botol plastik
-        - Kertas & kardus
-        - Kaleng minuman
-        - Kemasan makanan
-        """)
-    
-    # Contoh Hasil Klasifikasi (FEATURE #2)
-    st.markdown("---")
-    st.subheader("📸 Contoh Hasil Klasifikasi")
-    st.markdown("Berikut adalah contoh hasil prediksi model:")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.success("**🌿 Organic**")
-        st.markdown("**Confidence:** 99.77%")
-        st.caption("✅ Sayuran, buah-buahan, sisa makanan")
-        st.caption("Model dapat mengidentifikasi sampah organik dengan tingkat akurasi sangat tinggi")
-    
-    with col2:
-        st.info("**♻️ Recyclable**")
-        st.markdown("**Confidence:** 99.33%")
-        st.caption("✅ Plastik, kertas, kaleng, botol")
-        st.caption("Model dapat membedakan material yang dapat didaur ulang")
+    else:
+        # Instructions
+        st.info("👆 Upload foto sampah untuk memulai klasifikasi")
+        
+        # Example images section
+        st.markdown("---")
+        st.subheader("💡 Contoh Gambar")
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.markdown("### 🌿 Organic")
+            st.markdown("""
+            - Sisa makanan
+            - Kulit buah
+            - Daun & ranting
+            - Sayuran busuk
+            """)
+        
+        with col2:
+            st.markdown("### ♻️ Recyclable")
+            st.markdown("""
+            - Botol plastik
+            - Kertas & kardus
+            - Kaleng minuman
+            - Kemasan makanan
+            """)
+        
+        # Contoh Hasil Klasifikasi
+        st.markdown("---")
+        st.subheader("📸 Contoh Hasil Klasifikasi")
+        st.markdown("Berikut adalah contoh hasil prediksi model:")
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.success("**🌿 Organic**")
+            st.markdown("**Confidence:** 99.77%")
+            st.caption("✅ Sayuran, buah-buahan, sisa makanan")
+            st.caption("Model dapat mengidentifikasi sampah organik dengan tingkat akurasi sangat tinggi")
+        
+        with col2:
+            st.info("**♻️ Recyclable**")
+            st.markdown("**Confidence:** 99.33%")
+            st.caption("✅ Plastik, kertas, kaleng, botol")
+            st.caption("Model dapat membedakan material yang dapat didaur ulang")
 
 # ============================================
-# FOOTER
+# TAB 2: BATCH PREDICTION (NEW!)
 # ============================================
-st.markdown("---")
-st.markdown("""
-<div style='text-align: center'>
-    <p>Waste Classification System | Powered by TensorFlow & Streamlit</p>
-    <p>Membantu memilah sampah dengan lebih mudah dan cepat 🌍</p>
-</div>
-""", unsafe_allow_html=True)
+with tab2:
+    st.markdown("### 📁 Upload Multiple Images")
+    st.info("Upload beberapa foto sekaligus untuk klasifikasi batch")
+    
+    # Multiple file upload
+    uploaded_files = st.file_uploader(
+        "📤 Upload Foto Sampah (Multiple)",
+        type=['jpg', 'jpeg', 'png'],
+        accept_multiple_files=True,
+        help="Upload beberapa foto sekaligus",
+        key="batch_upload"
+    )
+    
+    if uploaded_files:
+        st.success(f"✅ {len(uploaded_files)} foto berhasil diupload!")
+        
+        # Process button
+        if st.button("🚀 Proses Semua Gambar", use_container_width=True, type="primary"):
+            
+            results = []
+            
+            # Progress bar
+            progress_bar = st.progress(0)
+            status_text = st.empty()
+            
+            # Process each image
+            for idx, uploaded_file in enumerate(uploaded_files):
+                status_text.text(f"Memproses {idx + 1}/{len(uploaded_files)}: {uploaded_file.name}")
+                
+                # Read image
+                image = Image.open(uploaded_file)
+                img_array = np.array(image)
+                img_bgr = cv2.cvtColor(img_array, cv2.COLOR_RGB2BGR)
+                
+                # Predict
+                label, confidence, emoji, color, info = predict(img_bgr)
+                
+                # Calculate display confidence
+                if label.startswith("Recyclable"):
+                    conf_display = confidence * 100
+                else:
+                    conf_display = (1 - confidence) * 100
+                
+                # Store result
+                results.append({
+                    'image': image,
+                    'filename': uploaded_file.name,
+                    'label': label,
+                    'emoji': emoji,
+                    'confidence': conf_display
+                })
+                
+                # Update progress
+                progress_bar.progress((idx + 1) / len(uploaded_files))
+            
+            status_text.empty()
+            progress_bar.empty()
+            
+            # Display results
+            st.markdown("---")
+            st.subheader("📊 Hasil Klasifikasi Batch")
+            
+            # Summary statistics
+            col1, col2, col3 = st.columns(3)
+            
+            organic_count = sum(1 for r in results if "Organic" in r['label'])
+            recyclable_count = sum(1 for r in results if "Recyclable" in r['label'])
+            avg_confidence = sum(r['confidence'] for r in results) / len(results)
+            
+            col1.metric("🌿 Organic", f"{organic_count} foto")
+            col2.metric("♻️ Recyclable", f"{recyclable_count} foto")
+            col3.metric("📊 Avg Confidence", f"{avg_confidence:.1f}%")
+            
+            st.markdown("---")
+            
+            # Display individual results in grid
+            cols_per_row = 3
+            for i in range(0, len(results), cols_per_row):
+                cols = st.columns(cols_per_row)
+                
+                for j in range(cols_per_row):
+                    idx = i + j
+                    if idx < len(results):
+                        result = results[idx]
+                        
+                        with cols[j]:
+                            st.image(result['image'], use_container_width=True)
+                            st.markdown(f"**{result['emoji']} {result['label']}**")
+                            st.progress(result['confidence'] / 100)
+                            st.caption(f"{result['confidence']:.1f}% • {result['filename']}")
+            
+            # Download all results
+            st.markdown("---")
+            
+            # Prepare batch result text
+            batch_result_text = f"""
+HASIL KLASIFIKASI BATCH
+========================
+
+Total Gambar: {len(results)}
+Tanggal: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+
+RINGKASAN:
+- Organic: {organic_count} foto
+- Recyclable: {recyclable_count} foto
+- Rata-rata Confidence: {avg_confidence:.2f}%
+
+DETAIL HASIL:
+"""
+            
+            for idx, result in enumerate(results, 1):
+                batch_result_text += f"""
+{idx}. {result['filename']}
+   Kategori: {result['label']}
+   Confidence: {result['confidence']:.2f}%
+"""
+            
+            batch_result_text += """
+---
+Waste Classification System
+Powered by TensorFlow & Streamlit
+"""
+            
+            col1, col2, col3 = st.columns([1, 2, 1])
+            with col2:
+                st.download_button(
+                    label="📥 Download Hasil Batch",
+                    data=batch_result_text,
+                    file_name=f"batch_classification_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt",
+                    mime="text/plain",
+                    use_container_width=True
+                )
+    
+    else:
+        st.info("👆 Upload beberapa foto untuk memulai batch prediction")
+        
+        st.markdown("---")
+        st.markdown("### 💡 Tips Batch Prediction:")
+        st.markdown("""
+        - Upload 2-10 foto sekaligus untuk hasil optimal
+        - Semua foto akan diproses secara otomatis
+        - Hasil akan ditampilkan dalam grid yang rapi
+        - Download hasil lengkap dalam format text
+        """)
